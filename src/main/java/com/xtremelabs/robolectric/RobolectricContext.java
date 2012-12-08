@@ -67,7 +67,7 @@ public class RobolectricContext {
         Setup setup = createSetup();
         classHandler = createClassHandler(setup);
         robolectricConfig = createRobolectricConfig();
-        AndroidTranslator androidTranslator = createAndroidTranslator(classHandler, setup, classCache);
+        AndroidTranslator androidTranslator = createAndroidTranslator(setup, classCache);
         robolectricClassLoader = createRobolectricClassLoader(setup, classCache, androidTranslator);
     }
 
@@ -84,10 +84,10 @@ public class RobolectricContext {
             classCacheDirectory = new File(classCachePath);
         }
 
-        return new ClassCache(new File(classCacheDirectory, "cached-robolectric-classes.jar").getAbsolutePath(), AndroidTranslator.CACHE_VERSION);
+        return new ZipClassCache(new File(classCacheDirectory, "cached-robolectric-classes.jar").getAbsolutePath(), AndroidTranslator.CACHE_VERSION);
     }
 
-    public AndroidTranslator createAndroidTranslator(ClassHandler classHandler, Setup setup, ClassCache classCache) {
+    public AndroidTranslator createAndroidTranslator(Setup setup, ClassCache classCache) {
         return new AndroidTranslator(classCache, setup);
     }
 
